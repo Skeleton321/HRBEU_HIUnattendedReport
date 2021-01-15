@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30907.101
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HRBEU_HIUnattendedReport", "HRBEU_HIUnattendedReport.csproj", "{F767BF29-E693-4B61-B2E1-D1F2F8386F03}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnattendedReportProxy", "UnattendedReportProxy\UnattendedReportProxy.csproj", "{B29087BC-5F57-435E-BA5D-F0616587B2FA}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{F767BF29-E693-4B61-B2E1-D1F2F8386F03}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F767BF29-E693-4B61-B2E1-D1F2F8386F03}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F767BF29-E693-4B61-B2E1-D1F2F8386F03}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F767BF29-E693-4B61-B2E1-D1F2F8386F03}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B29087BC-5F57-435E-BA5D-F0616587B2FA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B29087BC-5F57-435E-BA5D-F0616587B2FA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B29087BC-5F57-435E-BA5D-F0616587B2FA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B29087BC-5F57-435E-BA5D-F0616587B2FA}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {2CEAD4BA-DA59-4A97-9BEA-3D9C1ECBDE92}
+	EndGlobalSection
+EndGlobal
