@@ -7,7 +7,7 @@
     已实现的功能:
         1. 打卡
         2. 截图
-        3. 发送截图至指定的群
+        3. 发送截图至指定的群(需要搭配[HIUnattendedReport_PicUpload](https://github.com/Skeleton321/HIUnattendedReport_PicUpload)使用)
 
 ### 运行要求
 - .NET Framework 4.5
@@ -17,7 +17,7 @@
 
 打卡部分使用了`HttpClient`和[`Newtonsoft.Json`](https://github.com/JamesNK/Newtonsoft.Json)  
 截图部分使用了`Selenium`，浏览器使用了`Chromium`  
-发送部分使用了[`Mirai`](https://github.com/mamoe/mirai/)
+发送部分使用了[`Mirai`](https://github.com/mamoe/mirai/)，需要使用[HIUnattendedReport_PicUpload](https://github.com/Skeleton321/HIUnattendedReport_PicUpload)
 
 截图时并没有设置Chromium为headerless，主要是为了Selenium出现问题时也可以手动截图。
 
@@ -49,3 +49,4 @@
 3. `UnattendedReportProxy.exe`有重试机制，理论上可以一直运行，但是本人并未做稳定性测试，建议每天起床过后关闭，睡觉之前再打开。电脑不能关。
 4. 有问题请发issue，如果尝试自己改代码，你将会看到: 鬼才变量\函数名; 高血压函数(指一个函数一百多行); 只有马克思才看得懂的代码。
 5. 如果有意见也可以发issue。
+6. 发送截图需要[HIUnattendedReport_PicUpload](https://github.com/Skeleton321/HIUnattendedReport_PicUpload)
