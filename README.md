@@ -15,8 +15,8 @@
 
 ### 工作机制
 
-打卡部分使用了`HttpClient`和[`Newtonsoft.Json`](https://github.com/JamesNK/Newtonsoft.Json)
-截图部分使用了`Selenium`，浏览器使用了`Chromium`
+打卡部分使用了`HttpClient`和[`Newtonsoft.Json`](https://github.com/JamesNK/Newtonsoft.Json)  
+截图部分使用了`Selenium`，浏览器使用了`Chromium`  
 发送部分使用了[`Mirai`](https://github.com/mamoe/mirai/)
 
 截图时并没有设置Chromium为headerless，主要是为了Selenium出现问题时也可以手动截图。
@@ -39,8 +39,8 @@
 
 一般来说，最常用的是`UnattendedReportProxy.exe`，它相比于`HRBEU_HIUnattendedReport.exe`来说更符合大众的使用习惯，同时有定时功能。
 
-`UnattendedReportProxy.exe`运行后会要求用户输入学号 密码 签到时间 要发送图片的群。按操作完成后即可进行自动签到。
-`HRBEU_HIUnattendedReport.exe`主要用于命令行，功能比前者更多，但是不能直接双击运行。命令行中输入`HRBEU_HIUnattendedReport.exe -h`可以查看所有用法。
+`UnattendedReportProxy.exe`运行后会要求用户输入学号 密码 签到时间 要发送图片的群。按操作完成后即可进行自动签到。  
+`HRBEU_HIUnattendedReport.exe`主要用于命令行，功能比前者更多，但是不能直接双击运行。命令行中输入  `HRBEU_HIUnattendedReport.exe -h`可以查看所有用法。
 
 ### 注意事项
 
