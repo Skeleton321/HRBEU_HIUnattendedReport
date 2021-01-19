@@ -35,7 +35,7 @@ namespace UnattendedReportProxy
                 try
                 {
                     Cmd cmd = Command.DeserializeObject<Cmd>(args);
-                    if ((cmd.time = Console.ReadLine()).Length != 4 || !Time.isAvailable(cmd.time, out setTime))
+                    if (!Time.isAvailable(cmd.time, out setTime))
                     {
                         Console.WriteLine("时间格式错误。");
                         return;
@@ -44,6 +44,16 @@ namespace UnattendedReportProxy
                     {
                         Command.PrintHelpInfo<Cmd>();
                         return;
+                    }
+                    if (cmd.debug)
+                    {
+                        Console.WriteLine("当前参数: ");
+                        Console.WriteLine($"  username: {cmd.username}");
+                        Console.WriteLine($"  password: {cmd.password}");
+                        Console.WriteLine($"  time: {cmd.time}");
+                        Console.WriteLine($"  group: {cmd.group}");
+                        Console.WriteLine($"  port: {cmd.port}");
+                        Console.WriteLine($"  disableScreenShot: {cmd.disableScreenShot}");
                     }
                     Proxy.instance.cmd = cmd;
                 }
@@ -69,8 +79,9 @@ namespace UnattendedReportProxy
         [Necessary()]
         [Description("设置签到时间")]
         public string time { get; set; }
-        [Alias("p")]
         [Description("设置图片上传模块的连接端口")]
         public int port { get; set; } = 6291;
+        [Description("显示调试信息，例如传入的参数等")]
+        public bool debug { get; set; } = false;
     }
 }

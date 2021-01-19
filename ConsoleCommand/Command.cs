@@ -63,20 +63,19 @@ namespace ConsoleCommand
                         if (arg[0] == '-')
                             throw new IllegalArgumentException($"第{i + 1}个参数({arg})用法错误。请使用--help查看正确用法。");
                         else
-                            value = arg.Trim().Trim(new[] { '\"' });
+                            value = arg.Trim().Trim(new[] { '"' });
                     }
 
-                    string tmp = arg.Trim().Trim(new[] { '"' });
                     Type ptype = property.PropertyType;
 
                     try
                     {
                         if (ptype == typeof(long))
-                            property.SetValue(t, Convert.ToInt64(tmp));
+                            property.SetValue(t, Convert.ToInt64(value));
                         else if (ptype == typeof(int))
-                            property.SetValue(t, Convert.ToInt32(tmp));
+                            property.SetValue(t, Convert.ToInt32(value));
                         else
-                            property.SetValue(t, tmp);
+                            property.SetValue(t, value);
                     }catch(Exception e)
                     {
                         Console.WriteLine($"第{i + 1}个参数({arg})类型不受支持。\n{e.Message}");
