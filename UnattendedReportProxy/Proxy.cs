@@ -9,17 +9,16 @@ namespace UnattendedReportProxy
         private bool timeBlock;
 
         public static readonly Proxy instance = new Proxy();
-        private static readonly Mutex mutex = new Mutex();
 
         private Thread daemon = null;
         private bool Running = true;
 
-        public string[] user { get; set; }
+        public HRBEU_HIUnattendedReport.Cmd cmd = null;
 
         private Proxy()
         {
             timeBlock = false;
-            user = new string[0];
+            cmd = new HRBEU_HIUnattendedReport.Cmd();
         }
 
         public Proxy setTime(Time dateTime)
@@ -43,7 +42,7 @@ namespace UnattendedReportProxy
         public static void SingleRun()
         {
             int tmp;
-            while ((tmp = HRBEU_HIUnattendedReport.Core.Run(instance.user)) > 20 && tmp < 1000)
+            while ((tmp = HRBEU_HIUnattendedReport.Core.Run(instance.cmd)) > 20 && tmp < 1000)
                 Thread.Sleep(1000 * 60);
         }
 

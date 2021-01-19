@@ -4,16 +4,16 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{B29087BC-5F57-435E-BA5D-F0616587B2FA}</ProjectGuid>
-    <OutputType>Exe</OutputType>
-    <RootNamespace>UnattendedReportProxy</RootNamespace>
-    <AssemblyName>UnattendedReportProxy</AssemblyName>
+    <ProjectGuid>{3EA415C4-C039-4B33-B5F3-55DD816D63FE}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>ConsoleCommand</RootNamespace>
+    <AssemblyName>ConsoleCommand</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
@@ -23,16 +23,12 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-  </PropertyGroup>
-  <PropertyGroup>
-    <ApplicationIcon>favicon32.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -45,26 +41,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Proxy.cs" />
-    <Compile Include="Program.cs" />
+    <Compile Include="Alias.cs" />
+    <Compile Include="BaseAttribute.cs" />
+    <Compile Include="Command.cs" />
+    <Compile Include="Description.cs" />
+    <Compile Include="IllegalArgumentException.cs" />
+    <Compile Include="Misc.cs" />
+    <Compile Include="MissNecessaryParameterException.cs" />
+    <Compile Include="Necessary.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Time.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="App.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="favicon32.ico" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\ConsoleCommand\ConsoleCommand.csproj">
-      <Project>{3ea415c4-c039-4b33-b5f3-55dd816d63fe}</Project>
-      <Name>ConsoleCommand</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\HRBEU_HIUnattendedReport.csproj">
-      <Project>{f767bf29-e693-4b61-b2e1-d1f2f8386f03}</Project>
-      <Name>HRBEU_HIUnattendedReport</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
