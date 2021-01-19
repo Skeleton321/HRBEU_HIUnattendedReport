@@ -4,10 +4,10 @@
 
 代码写得烂，望dalao轻喷。
 
-    已实现的功能:
-        1. 打卡
-        2. 截图
-        3. 发送截图至指定的群(需要搭配[HIUnattendedReport_PicUpload](https://github.com/Skeleton321/HIUnattendedReport_PicUpload)使用)
+已实现的功能:
+1. 打卡
+2. 截图
+3. 发送截图至指定的群(需要搭配[HIUnattendedReport_PicUpload](https://github.com/Skeleton321/HIUnattendedReport_PicUpload)使用)
 
 ### 运行要求
 - .NET Framework 4.5
