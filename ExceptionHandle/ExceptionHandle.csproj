@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{3EA415C4-C039-4B33-B5F3-55DD816D63FE}</ProjectGuid>
+    <ProjectGuid>{35484EEA-3DCB-4686-BE0D-4AB79245207C}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>ConsoleCommand</RootNamespace>
-    <AssemblyName>ConsoleCommand</AssemblyName>
+    <RootNamespace>ExceptionHandle</RootNamespace>
+    <AssemblyName>ExceptionHandle</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
@@ -41,21 +41,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Alias.cs" />
-    <Compile Include="BaseAttribute.cs" />
-    <Compile Include="Command.cs" />
-    <Compile Include="Description.cs" />
-    <Compile Include="IllegalArgumentException.cs" />
+    <Compile Include="ErrorCode.cs" />
+    <Compile Include="FileLogger.cs" />
+    <Compile Include="Logger.cs" />
     <Compile Include="Misc.cs" />
-    <Compile Include="MissNecessaryParameterException.cs" />
-    <Compile Include="Necessary.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\URLog\ExceptionHandle.csproj">
-      <Project>{35484eea-3dcb-4686-be0d-4ab79245207c}</Project>
-      <Name>ExceptionHandle</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Net;
 using System.Net.Http;
+using ExceptionHandle;
 
 namespace HRBEU_HIUnattendedReport
 {
@@ -10,14 +11,15 @@ namespace HRBEU_HIUnattendedReport
         public static readonly string JKGC = "http://jkgc.hrbeu.edu.cn/infoplus/form/JSXNYQSBtest/start";
         public static readonly int WIDTH = 600;
 
+        private static readonly Logger logger = Logger.GetLogger();
+
         public CookieContainer cookies = new CookieContainer();
-        private HttpClient _client;
-        
+        private readonly HttpClient _client;
         public Client()
         {
             HttpClientHandler handler = new HttpClientHandler();
             handler.CookieContainer = cookies;
-            var c = new System.Net.Cookie("MESSAGE_TICKET", "%7B%22times%22%3A0%7D");
+            var c = new Cookie("MESSAGE_TICKET", "%7B%22times%22%3A0%7D");
             handler.CookieContainer.Add(new Uri("https://cas.hrbeu.edu.cn"), c);
             _client = new HttpClient(handler);
             _client.Timeout = new TimeSpan(0, 0, 0, 3);
@@ -28,13 +30,13 @@ namespace HRBEU_HIUnattendedReport
 
         public HttpResponseMessage Post(string url, FormUrlEncodedContent content, string referer = null)
         {
-            Core.logger.Debug("post:");
-            Core.logger.Debug($"  url={url}");
-            Core.logger.Debug($"  content={content}");
+            logger.Debug("post:");
+            logger.Debug($"  url={url}");
+            logger.Debug($"  content={content}");
             if(string.IsNullOrWhiteSpace(referer))
-                Core.logger.Debug($"  referer=null");
+                logger.Debug($"  referer=null");
             else
-                Core.logger.Debug($"  referer={referer}");
+                logger.Debug($"  referer={referer}");
 
             if (referer != null)
                 _client.DefaultRequestHeaders.Referrer = new Uri(referer);
@@ -43,22 +45,21 @@ namespace HRBEU_HIUnattendedReport
             {
                 result.Wait();
             }
-            catch (Exception e)
+            catch (Exception)
             {
-                Core.logger.Error(e.ToString());
-                Environment.Exit(200);
+                return null;
             }
             return result.Result;
         }
 
         public HttpResponseMessage Get(string url, string referer = null)
         {
-            Core.logger.Debug("post:");
-            Core.logger.Debug($"  url={url}");
+            logger.Debug("post:");
+            logger.Debug($"  url={url}");
             if (string.IsNullOrWhiteSpace(referer))
-                Core.logger.Debug($"  referer=null");
+                logger.Debug($"  referer=null");
             else
-                Core.logger.Debug($"  referer={referer}");
+                logger.Debug($"  referer={referer}");
 
             if (referer != null)
                 _client.DefaultRequestHeaders.Referrer = new Uri(referer);
@@ -66,10 +67,9 @@ namespace HRBEU_HIUnattendedReport
             try
             {
                 result.Wait();
-            }catch(Exception e)
+            }catch(Exception)
             {
-                Core.logger.Error(e.ToString());
-                Environment.Exit(201);
+                return null;
             }
             return result.Result;
         }

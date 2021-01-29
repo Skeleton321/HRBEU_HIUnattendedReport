@@ -41,9 +41,20 @@ namespace UnattendedReportProxy
 
         public static void SingleRun()
         {
-            int tmp;
-            while ((tmp = HRBEU_HIUnattendedReport.Core.Run(instance.cmd)) > 20 && tmp < 1000)
-                Thread.Sleep(1000 * 60);
+            while (HRBEU_HIUnattendedReport.Core.Run(instance.cmd) != 0)
+            {
+                Time now = Time.Now;
+                int offset = 60;
+                Console.Write("本次签到失败，{0,2:D}s后重试", offset);
+                while (offset != 0)
+                {
+                    while (Time.Now.Second == now.Second) Thread.Sleep(Convert.ToInt32((1000 - now.Millisecond) * 0.9));
+                    now = Time.Now;
+                    offset--;
+                    Console.Write("\r本次签到失败，{0,2:D}s后重试", offset);
+                }
+                Console.WriteLine();
+            }
         }
 
         public void Abort()
@@ -61,7 +72,15 @@ namespace UnattendedReportProxy
                 {
                     Time now = Time.Now;
                     long offset = time - now;
-                    Console.WriteLine($"{offset / 1000 / 60}分钟({offset}ms)后开始签到");
+                    Console.Write("{0,4:D}分钟({1,8:D}ms)后开始签到", offset / 1000 / 60, offset);
+                    while (offset != 0)
+                    {
+                        while (Time.Now.Second == now.Second) Thread.Sleep(Convert.ToInt32((1000 - now.Millisecond) * 0.9));
+                        now = Time.Now;
+                        offset = time - now;
+                        Console.Write("\r{0,4:D}分钟({1,8:D}ms)后开始签到", offset / 1000 / 60, offset);
+                    }
+                    Console.WriteLine();
                     if (offset == 0)
                     {
                         SingleRun();
@@ -82,5 +101,6 @@ namespace UnattendedReportProxy
                 Console.WriteLine(e.Message);
             }
         }
+
     }
 }

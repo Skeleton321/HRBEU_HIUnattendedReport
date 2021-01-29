@@ -1,4 +1,5 @@
 ﻿using ConsoleCommand;
+using ExceptionHandle;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -6,13 +7,15 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Threading;
 using UnattendedReport_PicUpload_Client;
+
 
 namespace HRBEU_HIUnattendedReport
 {
     public class Core
     {
-        public static FileLogger logger = null;
+        private static readonly Logger logger = Logger.GetLogger();
         public static readonly Client client = new Client();
 
         public static int Run(string[] args)
@@ -38,26 +41,37 @@ namespace HRBEU_HIUnattendedReport
                 return 192;
             }
         }
+
         public static int Run(Cmd cmd)
+        {
+            try
+            {
+                _Run(cmd);
+            }catch(ErrorCode ec)
+            {
+                logger.Error(ec.Message);
+                logger.Error(ec.Source);
+                logger.Error(ec.StackTrace);
+                return ec.Code;
+            }
+            return 0;
+        }
+        public static void _Run(Cmd cmd)
         {
             User user = new User(cmd.username, cmd.password);
             Upload.group = cmd.group;
-
-            logger = new FileLogger();
+            Upload.port = cmd.port;
 
             Dictionary<string, string> vals;
 
             var result = client.Get(Client.JKGC);
-
+            if (result == null)
+                throw new HttpOperationFailed("登录前准备");
             if (result.StatusCode != HttpStatusCode.OK)
             {
-                Console.WriteLine("服务器连接失败。");
-                Console.ReadLine();
-                logger.Log(Level.ERROR, "服务器连接失败");
                 logger.Info(Misc.GetRequestUri(result));
                 logger.Info(Misc.GetStringContent(result));
-                logger.Close();
-                return 21;
+                throw new CannotConnectServer("登录前准备");
             }
 
             string uri = Misc.GetRequestUri(result);
@@ -74,6 +88,8 @@ namespace HRBEU_HIUnattendedReport
                     }, true);
                 }
                 result = client.Post(uri, Misc.GetLoginContent(vals["lt"], vals["execution"], user));
+                if (result == null)
+                    throw new HttpOperationFailed("登录");
             }
 
             uri = Misc.GetRequestUri(result);
@@ -96,7 +112,8 @@ namespace HRBEU_HIUnattendedReport
                 new KeyValuePair<string, string>("csrfToken", vals["csrfToken"]),
                 new KeyValuePair<string, string>("formData", "{\"_VAR_URL\":\"http://jkgc.hrbeu.edu.cn/infoplus/form/JSXNYQSBtest/start\",\"_VAR_URL_Attr\":\"{}\"}")
             }));
-
+            if (result == null)
+                throw new HttpOperationFailed("获取签到地址");
             {
                 string html = Misc.GetStringContent(result);
                 logger.Info(html);
@@ -104,12 +121,11 @@ namespace HRBEU_HIUnattendedReport
                 if (j.errno != 0)
                 {
                     Console.WriteLine(j.error);
-                    Console.ReadLine();
-                    logger.Log(Level.ERROR, j.error.ToString());
-                    logger.Close();
-                    return 100;
+                    throw new APIArgumentIllegal(j.error.ToString(), "获取历史签到内容");
                 }
                 result = client.Get(j.entities[0].Value);
+                if (result == null)
+                    throw new HttpOperationFailed("获取历史签到内容");
             }
             Console.WriteLine("签到中...");
             logger.Info(Misc.GetRequestUri(result));
@@ -136,6 +152,8 @@ namespace HRBEU_HIUnattendedReport
                     new KeyValuePair<string, string>("lang", "zh"),
                     new KeyValuePair<string, string>("csrfToken", vals["csrfToken"])
                 }), uri);
+            if (result == null)
+                throw new HttpOperationFailed("签到 - 0");
             PostData pd;
             using (StreamReader sr = Misc.GetStreamContent(result))
             {
@@ -147,6 +165,8 @@ namespace HRBEU_HIUnattendedReport
             result = client.Post("http://jkgc.hrbeu.edu.cn/infoplus/interface/listNextStepsUsers",
                 Misc.GetListNextStepsUsersContent(vals["stepId"], pd, vals["csrfToken"]),
                 uri);
+            if (result == null)
+                throw new HttpOperationFailed("签到 - 1");
 
             logger.Info(Misc.GetStringContent(result));
 
@@ -154,25 +174,39 @@ namespace HRBEU_HIUnattendedReport
             result = client.Post("http://jkgc.hrbeu.edu.cn/infoplus/interface/doAction",
                 Misc.GetDoActionContent(vals["stepId"], pd, vals["csrfToken"]),
                 uri);
+            if (result == null)
+                throw new HttpOperationFailed("签到 - 2");
 
             logger.Info(Misc.GetStringContent(result));
 
             Console.WriteLine("签到完成。");
-            int code = 0;
             if (!cmd.disableScreenShot)
             {
                 Misc.GetScreenShot(uri,
                     client.cookies.GetCookies(new Uri(uri)).Cast<Cookie>().ToList()[0]);
                 if (Upload.group > 0)
-                    code = Upload.DoAction();
+                    while (true)
+                        try
+                        {
+                            Upload.DoAction();
+                            break;
+                        }
+                        catch(ErrorCode ec)
+                        {
+                            logger.Error(ec.Message);
+                            logger.Error(ec.Source);
+                            logger.Error(ec.StackTrace);
+                            Console.WriteLine("图片上传失败: 与图片上传模块的连接出现问题。60s后重试");
+                        }
+                        Thread.Sleep(1000 * 60);
             }
-            logger.Close();
-            return code;
         }
 
         public static int Main(string[] args)
         {
-            return Run(args);
+            int code = Run(args);
+            Logger.Close();
+            return code;
         }
     }
 
@@ -191,6 +225,8 @@ namespace HRBEU_HIUnattendedReport
         [Alias("g")]
         [Description("设置要发送图片的群号")]
         public long group { get; set; } = -1;
+        [Description("设置图片上传模块的连接端口")]
+        public int port { get; set; } = 6291;
 
         [Alias("s")]
         [Description("禁用截图功能。该功能禁用时，图片发送功能也被禁用。")]

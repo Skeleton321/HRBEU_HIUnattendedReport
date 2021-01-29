@@ -79,8 +79,6 @@ namespace UnattendedReportProxy
         [Necessary()]
         [Description("设置签到时间")]
         public string time { get; set; }
-        [Description("设置图片上传模块的连接端口")]
-        public int port { get; set; } = 6291;
         [Description("显示调试信息，例如传入的参数等")]
         public bool debug { get; set; } = false;
     }

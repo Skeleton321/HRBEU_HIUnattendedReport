@@ -11,13 +11,14 @@ using System.Text;
 using System.Text.RegularExpressions;
 
 using UnattendedReport_PicUpload_Client;
+using ExceptionHandle;
 
 namespace HRBEU_HIUnattendedReport
 {
     class Misc
     {
         public static readonly string BOUNDFIELDS = "fieldCXXXdqszdjtx,fieldCXXXjtgjbc,fieldGLJL,fieldMQJCRxh,fieldCXXXsftjhb,fieldSTQKqt,fieldSTQKglsjrq,fieldGLFS,fieldYQJLjrsfczbldqzt,fieldCXXXjtfsqtms,fieldCXXXjtfsfj,fieldFHJH,fieldJBXXjjlxrdh,fieldJBXXxm,fieldZXZT,fieldCXXXsftjhbq2,fieldSTQKfrtw,fieldMQJCRxm,fieldCXXXsftjhbq,fieldSTQKqtms,fieldCXXXjtfslc,fieldJBXXlxfs,fieldJBXXxb,fieldCXXXjtfspc,fieldYQJLsfjcqtbl,fieldHGCZDM,fieldCXXXssh,fieldLHTJSX,fieldCXXXfxcfdhsj,fieldZAsheng,fieldJBXXgh,fieldCNS,fieldYC,fieldSTQKfl,fieldCXXXsftjwh,fieldCXXXfxxq,fieldSTQKdqstzk,fieldSTQKhxkn,fieldSTQKqtqksm,fieldLHFrom,fieldHelp,fieldFLid,fieldYQJLjrsfczbl,fieldGLSJTo,fieldJBXXjjlxr,fieldCXXXfxcfsj,fieldMQJCRcjdd,fieldSQSJ,fieldZAjtwz,fieldSTQKfrsjrq,fieldSTQKks,fieldJBXXcsny,fieldCXXXdqszdshengtx,fieldSTQKgm,fieldCXXXjtzzq,fieldLHJH,fieldCXXXdqszd,fieldCXXXjtzzs,fieldSTQKfx,fieldSTQKfs,fieldCXXXjtfsdb,fieldCXXXcxzt,fieldCXXXdqszdqtx,fieldCXXXdqszdstx,fieldCXXXjtfshc,fieldCXXXjtjtzz,fieldCXXXsftjhbs,fieldCXXXsftjhbs2,fieldSTQKsfstbs,fieldCXXXsftjhbs1,fieldCXXXcqwdq,fieldGLSJFrom,fieldCXXXjtfszj,fieldSFLB,fieldZAqu,fieldZAZT,fieldCXXXjtzz,fieldLHTo,fieldCXXXjtfsqt,fieldSTQKfrsjsf,fieldZAshi,fieldHGCSULY,fieldSTQKglsjsf,fieldJBXXdw,fieldCFDD,fieldCXXXsftjhbjtdz,fieldMQJCRlxfs";
-
+        private static Logger logger = Logger.GetLogger();
         public static void GetScreenShot(string url, System.Net.Cookie JESSIONID)
         {
             var cdSvc = ChromeDriverService.CreateDefaultService();
@@ -172,9 +173,9 @@ namespace HRBEU_HIUnattendedReport
                 html.Append(line);
             }
 
-            Core.logger.Debug("------------------------原始网页------------------------");
-            Core.logger.Debug(html.ToString());
-            Core.logger.Debug("--------------------------------------------------------");
+            logger.Debug("------------------------原始网页------------------------");
+            logger.Debug(html.ToString());
+            logger.Debug("--------------------------------------------------------");
 
             if (isInForm)
             {
@@ -185,7 +186,7 @@ namespace HRBEU_HIUnattendedReport
 
             Dictionary<string, string> pairs = new Dictionary<string, string>();
 
-            Core.logger.Debug("------------------------正则表达式------------------------");
+            logger.Debug("------------------------正则表达式------------------------");
             foreach (BinKVGroup item in regexGroup)
             {
                 string reg;
@@ -198,10 +199,10 @@ namespace HRBEU_HIUnattendedReport
                     pairs[item.k1] = ans.Groups[1].Value;
                 else
                     pairs[item.v1] = ans.Groups[1].Value;
-                Core.logger.Debug($"  regex={reg}, value={ans.Groups[1].Value}");
+                logger.Debug($"  regex={reg}, value={ans.Groups[1].Value}");
             }
 
-            Core.logger.Debug("----------------------------------------------------------");
+            logger.Debug("----------------------------------------------------------");
             return pairs;
         }
 

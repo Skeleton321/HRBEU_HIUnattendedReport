@@ -79,8 +79,8 @@
   <ItemGroup>
     <Compile Include="Core.cs" />
     <Compile Include="Data.cs" />
+    <Compile Include="Exceptions.cs" />
     <Compile Include="Extend.cs" />
-    <Compile Include="Logger.cs" />
     <Compile Include="Client.cs" />
     <Compile Include="Misc.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -107,6 +107,10 @@
     <ProjectReference Include="ConsoleCommand\ConsoleCommand.csproj">
       <Project>{3ea415c4-c039-4b33-b5f3-55dd816d63fe}</Project>
       <Name>ConsoleCommand</Name>
+    </ProjectReference>
+    <ProjectReference Include="URLog\ExceptionHandle.csproj">
+      <Project>{35484eea-3dcb-4686-be0d-4ab79245207c}</Project>
+      <Name>ExceptionHandle</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

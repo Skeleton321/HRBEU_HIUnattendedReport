@@ -80,6 +80,10 @@
       <Project>{f767bf29-e693-4b61-b2e1-d1f2f8386f03}</Project>
       <Name>HRBEU_HIUnattendedReport</Name>
     </ProjectReference>
+    <ProjectReference Include="..\URLog\ExceptionHandle.csproj">
+      <Project>{35484eea-3dcb-4686-be0d-4ab79245207c}</Project>
+      <Name>ExceptionHandle</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">

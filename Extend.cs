@@ -18,23 +18,4 @@ namespace HRBEU_HIUnattendedReport
             return stringBuilder.ToString().IndexOf(value, startIndex);
         }
     }
-    static class LevelEx
-    {
-        public static string ToName(this Level level)
-        {
-            switch (level)
-            {
-                case Level.DEBUG:
-                    return "调试";
-                case Level.INFO:
-                    return "信息";
-                case Level.WARN:
-                    return "警告";
-                case Level.ERROR:
-                    return "错误";
-                default:
-                    return "未知";
-            }
-        }
-    }
 }
