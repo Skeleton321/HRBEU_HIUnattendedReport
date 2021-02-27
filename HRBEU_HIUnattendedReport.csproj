@@ -108,7 +108,7 @@
       <Project>{3ea415c4-c039-4b33-b5f3-55dd816d63fe}</Project>
       <Name>ConsoleCommand</Name>
     </ProjectReference>
-    <ProjectReference Include="URLog\ExceptionHandle.csproj">
+    <ProjectReference Include="ExceptionHandle\ExceptionHandle.csproj">
       <Project>{35484eea-3dcb-4686-be0d-4ab79245207c}</Project>
       <Name>ExceptionHandle</Name>
     </ProjectReference>

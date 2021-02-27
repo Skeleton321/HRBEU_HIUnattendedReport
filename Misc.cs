@@ -141,7 +141,7 @@ namespace HRBEU_HIUnattendedReport
             });
         }
 
-        public static FormUrlEncodedContent GetLoginContent(string lt, string execution, User user)
+        public static FormUrlEncodedContent GetLoginContent(string lt, string execution, string source, User user)
         {
             return new FormUrlEncodedContent(new[]
             {
@@ -149,6 +149,7 @@ namespace HRBEU_HIUnattendedReport
                 new KeyValuePair<string, string>("password", user.password),
                 new KeyValuePair<string, string>("captcha", ""),
                 new KeyValuePair<string, string>("lt", lt),
+                new KeyValuePair<string, string>("lt", source),
                 new KeyValuePair<string, string>("execution", execution),
                 new KeyValuePair<string, string>("_eventId", "submit"),
                 new KeyValuePair<string, string>("submit", "登+录")

@@ -84,10 +84,11 @@ namespace HRBEU_HIUnattendedReport
                 {
                     vals = Misc.GetArgs(sr, new[] {
                         new BinKVGroup("name", "lt", "value"),
-                        new BinKVGroup("name", "execution", "value")
-                    }, true);
+                        new BinKVGroup("name", "execution", "value"),
+                        new BinKVGroup("name", "source", "value")
+                    });
                 }
-                result = client.Post(uri, Misc.GetLoginContent(vals["lt"], vals["execution"], user));
+                result = client.Post(uri, Misc.GetLoginContent(vals["lt"], vals["execution"], vals["source"], user));
                 if (result == null)
                     throw new HttpOperationFailed("登录");
             }
